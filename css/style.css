@@ -1,0 +1,141 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Itim', cursive;
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    background-color: #121818;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.title{
+    color: white;
+    text-align: center;
+    justify-content: center;
+    font-size: 25px;
+    margin-top: 10%;
+    cursor: pointer;
+    display: flex;
+}
+
+
+.board{
+    margin: 5px auto;
+    display: flex;
+    max-width: 300px;
+    max-height: 300px;
+    flex-wrap: wrap;
+}
+
+.cell{
+    width: 33%;
+    height: 100px;
+    border: 1px solid white;
+    cursor: pointer;
+    font-size: 50px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+}
+
+
+.cell.x::before,
+.cell.x::after{
+color: #09C372;
+}
+
+.board.x .cell:not(.x):not(.o):hover::before,
+.board.x .cell:not(.x):not(.o):hover::after{
+color: #f4faf7;
+}
+
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.o):hover::before,
+.board.x .cell:not(.x):not(.o):hover::after{
+    content: 'X';
+    position: absolute;
+}
+
+.cell.o::before,
+.cell.o::after{
+    color: #498AFB;
+}
+
+.cell.o::before,
+.cell.o::after,
+.board.o .cell:not(.x):not(.o):hover::before,
+.board.o .cell:not(.x):not(.o):hover::after{
+    content: 'O';
+    position: absolute;
+}
+
+.board.o .cell:not(.x):not(.o):hover::before,
+.board.o .cell:not(.x):not(.o):hover::after{
+color: #f5f6f8;
+}
+
+.cell.x, .cell.o{
+    cursor: not-allowed;
+}
+
+
+.player-display{
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 8px;
+}
+
+.hide{
+    display: none;
+}
+
+.playerX{
+    color: #09C372;
+}
+
+.playerO{
+    color: #498AFB;
+}
+
+.control{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+#reset{
+    background-color: #FF3860;
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 18px;
+    margin-left: 3px;
+    cursor: pointer;
+}
+
+.announcer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 18px;
+}
+
+.announcer.show{    
+    display: flex;
+}
