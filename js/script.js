@@ -1,14 +1,17 @@
-const cells = Array.from(document.getElementsByClassName('cell'));
-const playerDisplay = document.getElementsByClassName('display-player');
+//const cells = document.getElementsByClassName('cells');
+const playerDisplay = document.getElementById('display-player');
+const playerTurn = document.getElementById('player-turn');
 const resetButton = document.getElementById('reset');
-const announcer = document.getElementsByClassName('announcer');
+const announcement = document.getElementById('announcement');
+const announcer = document.getElementById('announcer');
+const boardPlayer = document.getElementById('board');
 
 let board = ['', '', '', '', '', '', '', '', '', ];
 let currentPlayer = 'X';
 let isGameActive = true;
 
-const PLAYERX_WON = 'PLAYERX_WON';
-const PLAYERO_WON = 'PLAYERO_WON';
+const playerX_Won = 'PLAYERX_WON';
+const playerO_Won = 'PLAYERO_WON';
 const TIE  = 'TIE';
 
 const winningCondition = [
@@ -21,6 +24,40 @@ const winningCondition = [
     [0, 4, 8],
     [2, 4, 6],
 ];
+
+//cells.forEach(myFunction);
+
+function myFunction(cell, index) {
+    var cell = document.getElementById(cell);
+    playerTurn.classList.remove('hide');
+    userAction(cell, index);
+    //cell.addEventListener('click', userAction(cell, index));
+}
+
+
+function userAction(cell, index){
+    currentPlayer == cell.innerText;
+    if (isValidAction(cell) && isGameActive) {
+        cell.innerText = currentPlayer;
+        updateBoard(index);
+        handleResultValidation();
+        changePlayer(cell);   
+    }
+}
+
+
+function isValidAction(cell) {
+    if (cell.innerText === 'X' || cell.innerText === 'O') {
+        return false;        
+    }
+    return true;
+}
+
+
+function updateBoard(index) {
+    board[index] = currentPlayer;
+}
+
 
 function handleResultValidation() {
     let roundWon = false;
@@ -35,7 +72,7 @@ function handleResultValidation() {
         }
 
         if (a === b && b === c ) {
-            round = true;
+            roundWon = true;
             break;         
         }
     }
@@ -48,6 +85,8 @@ function handleResultValidation() {
         }
         isGameActive = false;
         return;
+
+        alert(isGameActive);
     }
 
     if (!board.includes('')) {
@@ -59,10 +98,14 @@ function handleResultValidation() {
 function announce(type) {
     switch (type) {
         case playerO_Won:
-            announcer.innerHTML = 'Player <span class=""PlayerO">O</span> Won';
+            announcement.classList.remove('hide'); 
+            announcement.classList.add('show');            
+            announcer.innerHTML = 'Player <span class="PlayerO">O</span> Won';
             break;
         case playerX_Won:
-            announcer.innerHTML = 'Player <span class=""PlayerX">X</span> Won';
+            announcement.classList.remove('hide'); 
+            announcement.classList.add('show'); 
+            announcer.innerHTML = 'Player <span class="PlayerX">X</span> Won';
             break;
         case TIE:
             announcer.innerHTML = 'Tie';
@@ -71,57 +114,41 @@ function announce(type) {
     announcer.classList.remove('hide');
 }
 
-function isValidAction(cell) {
-    if (cell.innerText === 'X' || cell.innerText === 'O') {
-        return false;
-    }
-    return true;
-}
 
-function updateBoard(index) {
-    board[index] = currentPlayer;
-    
-}
-
-function changePlayer(){
+function changePlayer(cell){
     playerDisplay.classList.remove(`player${currentPlayer}`);
+    boardPlayer.classList.remove(currentPlayer);
     if (currentPlayer === 'X') {
-        currentPlayer = 'O';        
+        currentPlayer = 'O'; 
+        cell.classList.add('x');      
     }else{
-        currentPlayer = 'X'
+        currentPlayer = 'X';
+        cell.classList.add('o');
     }
     playerDisplay.innerText = currentPlayer;
     playerDisplay.classList.add(`player${currentPlayer}`);
+    boardPlayer.classList.add(currentPlayer);
 }
 
-function userAction(cell, index){
-    if (isValidAction(cell) && isGameActive) {
-        cell.innerText = currentPlayer;
-        cell.classList.add(`playe${currentPlayer}`);
-        updatePlayer(index);
-        handleResultValidation();
-        changePlayer();   
-    }
-}
-
-function resetButton(){
+function resetBoard(){
     board = ['', '', '', '', '', '', '', '', ''];
     isGameActive = true;
-    announcer.classList.add('hide');
+    announcement.classList.add('hide');
+    announcement.classList.remove('show');
 
     if (currentPlayer === 'O') {
         changePlayer();
     }
 
-    cells.forEach(cell => {
+    for (let i = 0; i < 9; i++) {
+        var cell = document.getElementById('cell'+i)
+    
         cell.innerText = '';
         cell.classList.remove('playerX');
         cell.classList.remove('playerO');
-    });
+    }
 }
 
-cells.array.forEach((cell, index) => {
-    cell.addEventListener('click', () => userAction(cell, index));
-});
 
-resetButton.addEventListener('click' resetButton);
+
+//resetButton.addEventListener('click', resetBoard);
