@@ -1,4 +1,14 @@
-//const cells = document.getElementsByClassName('cells');
+// document.getElementsByName('player').forEach(function(firstPlayer) {
+//     firstPlayer.addEventListener('click', function() {
+//         var player = firstPlayer.value;
+//         document.getElementById('display-player').innerText = player;
+//         document.getElementById('start').classList.remove('hide');
+//     });
+//     });
+
+//     document.getElementById('start').addEventListener("click", start);
+
+const cells = document.getElementsByClassName('cell');
 const playerDisplay = document.getElementById('display-player');
 const playerTurn = document.getElementById('player-turn');
 const resetButton = document.getElementById('reset');
@@ -7,12 +17,13 @@ const announcer = document.getElementById('announcer');
 const boardPlayer = document.getElementById('board');
 
 let board = ['', '', '', '', '', '', '', '', '', ];
-let currentPlayer = 'X';
+let currentPlayer = playerDisplay.innerText;
+boardPlayer.classList.add(currentPlayer.toLowerCase());
 let isGameActive = true;
 
 const playerX_Won = 'PLAYERX_WON';
 const playerO_Won = 'PLAYERO_WON';
-const TIE  = 'TIE';
+const TIE = 'TIE';
 
 const winningCondition = [
     [0, 1, 2],
@@ -25,30 +36,26 @@ const winningCondition = [
     [2, 4, 6],
 ];
 
-//cells.forEach(myFunction);
+for (let i = 0; i < 9; i++) {
+    cells[i].addEventListener('click', function () {
+        if (isValidAction(cells[i]) && isGameActive === true) {
+            cells[i].innerText = currentPlayer;
 
-function myFunction(cell, index) {
-    var cell = document.getElementById(cell);
-    playerTurn.classList.remove('hide');
-    userAction(cell, index);
-    //cell.addEventListener('click', userAction(cell, index));
+            if (currentPlayer === 'X') {
+                cells[i].classList.add('x');
+            } else {
+                cells[i].classList.add('o');
+            }
+            updateBoard(i);
+            handleResultValidation();
+            changePlayer(cells[i]);
+        }
+    });
 }
-
-
-function userAction(cell, index){
-    currentPlayer == cell.innerText;
-    if (isValidAction(cell) && isGameActive) {
-        cell.innerText = currentPlayer;
-        updateBoard(index);
-        handleResultValidation();
-        changePlayer(cell);   
-    }
-}
-
 
 function isValidAction(cell) {
     if (cell.innerText === 'X' || cell.innerText === 'O') {
-        return false;        
+        return false;
     }
     return true;
 }
@@ -61,36 +68,35 @@ function updateBoard(index) {
 
 function handleResultValidation() {
     let roundWon = false;
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i <= 7; i++) {
         const winCondition = winningCondition[i];
-        const a= board[winCondition[0]];
-        const b= board[winCondition[1]];
-        const c= board[winCondition[2]];
+        const a = board[winCondition[0]];
+        const b = board[winCondition[1]];
+        const c = board[winCondition[2]];
 
         if (a === '' || b === '' || c === '') {
-            continue;            
+            continue;
         }
 
-        if (a === b && b === c ) {
+        if (a === b && b === c) {
             roundWon = true;
-            break;         
+            break;
         }
     }
 
     if (roundWon) {
-        if(currentPlayer === 'X'){
+        if (currentPlayer === 'X') {
             announce(playerX_Won);
-        }else{
+        } else {
             announce(playerO_Won);
         }
+        playerTurn.classList.add('hide');
         isGameActive = false;
         return;
-
-        alert(isGameActive);
     }
 
     if (!board.includes('')) {
-        announce(TIE);   
+        announce(TIE);
     }
 
 }
@@ -98,13 +104,13 @@ function handleResultValidation() {
 function announce(type) {
     switch (type) {
         case playerO_Won:
-            announcement.classList.remove('hide'); 
-            announcement.classList.add('show');            
+            announcement.classList.remove('hide');
+            announcement.classList.add('show');
             announcer.innerHTML = 'Player <span class="PlayerO">O</span> Won';
             break;
         case playerX_Won:
-            announcement.classList.remove('hide'); 
-            announcement.classList.add('show'); 
+            announcement.classList.remove('hide');
+            announcement.classList.add('show');
             announcer.innerHTML = 'Player <span class="PlayerX">X</span> Won';
             break;
         case TIE:
@@ -115,40 +121,33 @@ function announce(type) {
 }
 
 
-function changePlayer(cell){
+function changePlayer(cell) {
     playerDisplay.classList.remove(`player${currentPlayer}`);
-    boardPlayer.classList.remove(currentPlayer);
+    boardPlayer.classList.remove(currentPlayer.toLowerCase());
     if (currentPlayer === 'X') {
-        currentPlayer = 'O'; 
-        cell.classList.add('x');      
-    }else{
+        currentPlayer = 'O';
+    } else {
         currentPlayer = 'X';
-        cell.classList.add('o');
     }
+    boardPlayer.classList.add(currentPlayer.toLowerCase());
     playerDisplay.innerText = currentPlayer;
     playerDisplay.classList.add(`player${currentPlayer}`);
-    boardPlayer.classList.add(currentPlayer);
+    playerTurn.classList.remove('hide');
 }
 
-function resetBoard(){
+resetButton.addEventListener('click', resetBoard);
+
+function resetBoard() {
     board = ['', '', '', '', '', '', '', '', ''];
     isGameActive = true;
     announcement.classList.add('hide');
     announcement.classList.remove('show');
 
-    if (currentPlayer === 'O') {
-        changePlayer();
-    }
+    changePlayer();
 
     for (let i = 0; i < 9; i++) {
-        var cell = document.getElementById('cell'+i)
-    
-        cell.innerText = '';
-        cell.classList.remove('playerX');
-        cell.classList.remove('playerO');
+        cells[i].innerText = '';
+        cells[i].classList.remove('x');
+        cells[i].classList.remove('o');
     }
 }
-
-
-
-//resetButton.addEventListener('click', resetBoard);

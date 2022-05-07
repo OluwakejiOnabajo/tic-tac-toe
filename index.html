@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>Tic Tac Toe by Oluwakeji Onabajo</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
     <div class="title">
@@ -16,26 +18,40 @@
     <div id="player-turn" class="player-display hide">
         Player <span id="display-player" class="playerX">X</span>'s turn
     </div>
+    <!-- 
+    <div class="first-play" id="first-play">
+        <div class="head">Who plays first?</div>
+        <div class="option">
+        <input type="radio" name="player" id="player1" value="X">
+        <label for="player1">Player X</label>
+        </div>
+        <div class="option">
+        <input type="radio" name="player" id="player2" value="O">
+        <label for="player2">Player O</label>
+        </div>
+
+        <button class="btn-start hide" id="start">Start</button>
+    </div> -->
 
     <div class="board" id="board">
-        <div class="cell" id="cell0" onclick="myFunction('cell0', 0)"></div>
-        <div class="cell" id="cell1" onclick="myFunction('cell1', 1)"></div>
-        <div class="cell" id="cell2" onclick="myFunction('cell2', 2)"></div>
-        <div class="cell" id="cell3" onclick="myFunction('cell3', 3)"></div>
-        <div class="cell" id="cell4" onclick="myFunction('cell4', 4)"></div>
-        <div class="cell" id="cell5" onclick="myFunction('cell5', 5)"></div>
-        <div class="cell" id="cell6" onclick="myFunction('cell6', 6)"></div>
-        <div class="cell" id="cell7" onclick="myFunction('cell7', 7)"></div>
-        <div class="cell" id="cell8" onclick="myFunction('cell8', 8)"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
 
     </div>
     <div id="announcement" class="announcer hide">
-       
-<div class="controls">
-     <div id="announcer"></div>
-    <button id="reset" onclick="resetBoard()">Reset</button>
-</div> 
-</div> 
+        <div class="controls">
+            <div id="announcer"></div>
+            <button id="reset" onclick="resetBoard()">Reset</button>
+        </div>
+    </div>
     <script src="js/script.js"></script>
 </body>
+
 </html>
