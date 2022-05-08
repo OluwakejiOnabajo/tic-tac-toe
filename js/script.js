@@ -76,7 +76,8 @@ function handleResultValidation() {
 
         if (a === '' || b === '' || c === '') {
             continue;
-        }
+            console.log(a);
+                }
 
         if (a === b && b === c) {
             roundWon = true;
