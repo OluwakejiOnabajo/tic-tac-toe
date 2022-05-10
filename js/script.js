@@ -115,6 +115,8 @@ function announce(type) {
             announcer.innerHTML = 'Player <span class="PlayerX">X</span> Won';
             break;
         case TIE:
+            announcement.classList.remove('hide');
+            announcement.classList.add('show');
             announcer.innerHTML = 'Tie';
             break;
     }
